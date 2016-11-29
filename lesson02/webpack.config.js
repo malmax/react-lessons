@@ -1,8 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
-//AMD
-//CommonJS
-//ES6
+//AMD - define ['module','module', function() { }]
+//CommonJS - require / module.exports
+//ES6 - import/export
 
 var context = path.join(__dirname,'src');
 
