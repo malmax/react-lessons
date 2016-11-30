@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductInList from './app/components/productinlist.component.jsx';
+import ProductInList from './productinlist.component.jsx';
 
 export default class ProductList extends React.Component {
     render() {
