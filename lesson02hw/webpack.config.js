@@ -14,7 +14,7 @@ var context = path.join(__dirname,'src');
 module.exports = {
     //context: context,
     entry: [
-        path.join(__dirname,'lesson02hw','src','lesson02hw'),
+        path.join(__dirname,'src','lesson02hw'),
     ], //входной файл, может быть несколько через массив
     output: { //выходной путь, выходной файл. в нижнем регистре
         path: path.join(__dirname, 'dist'),
