@@ -18,6 +18,7 @@ module.exports = {
     ], //входной файл, может быть несколько через массив
     output: { //выходной путь, выходной файл. в нижнем регистре
         path: path.join(__dirname, 'dist'),
+        // TODO: почему [name] равен main? Хотя входной файл lesson02hw
         filename: '[name].js' //[name]_[hash].[ext] оригинальное название входного файла, хэш и расширение
     },
     module: {
@@ -32,7 +33,9 @@ module.exports = {
         },{
             test: /\.css$/,
             loader: 'style-loader!css-loader',
-
+        },{
+            test: /\.json$/,
+            loader: 'json',
         }]
     },
     resolve: {

@@ -1,0 +1,38 @@
+[
+    {
+    "id": 1,
+    "title": "Роза",
+    "imgsrc": "http://www.lookmi.ru/flowers/rose-drawing.jpg",
+    "price": 250
+    },
+    {
+    "id": 2,
+    "title": "Хризантемма",
+    "imgsrc": "http://travuska.ru/wp-content/uploads/2013/01/%D0%BA%D0%B5%D0%B3%D0%BA.jpg",
+    "price": 150
+    },
+    {
+    "id": 3,
+    "title": "Гвоздика",
+    "imgsrc": "http://dreempics.com/img/picture/Apr/12/ef69bee348f515cc56a58b19ff63d605/2.jpg",
+    "price": 190
+    },
+    {
+    "id": 4,
+    "title": "Ромашка",
+    "imgsrc": "http://g.io.ua/img_aa/large/0982/50/09825077.jpg",
+    "price": 50
+    },
+    {
+    "id": 5,
+    "title": "Астра",
+    "imgsrc": "http://www.playcast.ru/uploads/2015/07/16/14349747.png",
+    "price": 350
+    },
+    {
+    "id": 6,
+    "title": "Орхидея",
+    "imgsrc": "http://www.xrest.ru/schemes/00/01/a4/02/%D0%9E%D1%80%D1%85%D0%B8%D0%B4%D0%B5%D1%8F-1.jpg",
+    "price": 390
+    }
+]
