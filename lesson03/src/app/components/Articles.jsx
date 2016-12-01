@@ -9,12 +9,13 @@ export default class Articles extends React.Component {
     }
 
     onArticleClick(event) {
-        console.log(this);
-    }
+        console.log(event.target);
+    };
 
     render() {
+         let that = this;
          const articles = this.props.articles.map(function(article,index){
-            return (<Article ref={index+"_article"} onArticleClick={this.onArticleClick} key={index} {...article} />);
+            return (<Article ref={index+"_article"} onArticleClick={ that.onArticleClick } key={index} {...article} />);
         });
 
         return (
@@ -25,6 +26,6 @@ export default class Articles extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this);
+        //console.log(this);
     }
 }

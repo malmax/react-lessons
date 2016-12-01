@@ -10,12 +10,12 @@ export default class Article extends React.Component {
             clicked: false,
         };
     }
-    onClickHandler() {
+    onClickHandler(e) {
         this.setState({
             clicked: !this.state.clicked
         })
 
-        //this.props.onArticleClick(e);
+        this.props.onArticleClick(e);
 
         var p = this.refs.authorDiv; //ссылка на компонент
         var DomElement = ReactDOM.findDOMNode(p); //получаем именно Дом элемент
