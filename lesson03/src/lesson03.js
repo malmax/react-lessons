@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ProductList from './app/components/productlist.component.jsx';
+import Main from './app/pages/Main.jsx';
 
 let app = document.getElementById('app');
 //debugger;
-ReactDOM.render(<ProductList />, app); //Отрисовка компонента в блок app
+ReactDOM.render(<Main />, app); //Отрисовка компонента в блок app
