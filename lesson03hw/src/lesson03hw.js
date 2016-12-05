@@ -6,11 +6,14 @@ import "bootstrap/dist/js/bootstrap.js";
 
 import Main from './app/pages/Main.jsx';
 import Layout from './app/components/Layout.jsx';
+import Comments from './app/pages/Comments.jsx';
 
 let app = document.getElementById('app');
 //debugger;
+// <Main />
 ReactDOM.render(
     <Layout>
-        <Main />
+        
+        <Comments />
     </Layout>
 , app); //Отрисовка компонента в блок app
