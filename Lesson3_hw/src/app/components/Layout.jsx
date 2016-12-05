@@ -55,7 +55,7 @@ export default class Layout extends React.Component {
                 <div class="container">
                     { this.props.children }
                 </div>
-                <Modal title="Login form" onLogin={this.onLogin} ref="modal">
+                <Modal title="Login form" ref="modal">
                     <LoginForm ref="loginForm" />
                 </Modal>
             </div>
