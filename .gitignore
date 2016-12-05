@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 node_modules
 dist
 *.log
 *.zip
+=======
+*.zip
+node_modules
+dist
+>>>>>>> b9c3217cfdd0ed94c3e8564e371213b60656ee71
