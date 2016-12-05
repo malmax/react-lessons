@@ -25,7 +25,7 @@ export default class ProductInList extends React.Component {
                     <div className="col-md-4 price">{this.props.price}</div>
                     <div className="col-md-8">
                         <a href = {'addtocart.php?id=' + this.props.id} className="btn btn-default">
-                            В корзину
+                            В корзину Леша
                         </a>
                     </div>
                 </footer>     

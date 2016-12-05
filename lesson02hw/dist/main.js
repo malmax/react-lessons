@@ -21632,7 +21632,7 @@
 	                        _react2.default.createElement(
 	                            'a',
 	                            { href: 'addtocart.php?id=' + this.props.id, className: 'btn btn-default' },
-	                            '\u0412 \u043A\u043E\u0440\u0437\u0438\u043D\u0443'
+	                            '\u0412 \u043A\u043E\u0440\u0437\u0438\u043D\u0443 \u041B\u0435\u0448\u0430'
 	                        )
 	                    )
 	                )
@@ -22008,7 +22008,7 @@
 			"id": 2,
 			"title": "Хризантемма",
 			"imgsrc": "http://travuska.ru/wp-content/uploads/2013/01/%D0%BA%D0%B5%D0%B3%D0%BA.jpg",
-			"price": 150
+			"price": 250
 		},
 		{
 			"id": 3,
