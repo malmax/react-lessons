@@ -5,7 +5,7 @@ export default class MenuItem extends React.Component {
         super(props);        
     }
 
-    render() {
+    render() {        
         return <li className={this.props.classes}><a href={this.props.href} onClick = {this.props.click}>{this.props.text}</a></li>;
     }
 

@@ -3,6 +3,7 @@ import React from 'react';
 import Menu from './Menu.jsx';
 import Modal from "./Modal.jsx";
 import "./Layout.css";
+import LoginForm from "./LoginForm";
 
 export default class Layout extends React.Component {
     constructor(props) {
@@ -19,10 +20,12 @@ export default class Layout extends React.Component {
             {
                 href:"#",
                 text: "Login",
-                click: this.showModal
+                click: this.showModal.bind(this)
             }];
 
         this.showModal = this.showModal.bind(this);
+        this.onLogin = this.onLogin.bind(this);
+        this.hideModal();
     }
 
     showModal() {
@@ -33,7 +36,15 @@ export default class Layout extends React.Component {
         $('#modal').modal('hide');
     }
 
+    onLogin() {
+        let loginForm = this.refs.loginForm;
+        console.log(loginForm.state.login, loginForm.state.password);
+
+        this.hideModal();
+    }
+
     render() {
+        
         return(
             <div className="container">
                 <div className="header clearfix">
@@ -50,8 +61,8 @@ export default class Layout extends React.Component {
                     <p>&copy; 2016 Company, Inc.</p>
                 </footer>
 
-                <Modal title="Login form" ref="modal">
-                    Text in modal
+                <Modal title="Login form" ref="modal" onLogin={this.onLogin}>
+                    <LoginForm ref="loginForm" />
                 </Modal>
             </div>
 

@@ -14,6 +14,7 @@ export default class Menu extends React.Component {
             "active": 0
         }
 
+        
         // this.menuClickHandler = this.menuClickHandler.bind(this);
     }
 
@@ -21,11 +22,15 @@ export default class Menu extends React.Component {
         this.setState({'active':args[0]});
     }
 
-    render() {
+    render() {       
         let menus = this.props.menus.map((item,num)=>{ 
             let classes = this.state.active == num ? 'active' : '';
+            let clickFun = this.menuClickHandler.bind(this,num);
+            if(item.click)
+                clickFun = ()=>{item.click();this.menuClickHandler.bind(this,num)();};           
+                
             
-            return <MenuItem href={item.href} text={item.text} key={num} click={this.menuClickHandler.bind(this,num)} classes = {classes} />
+            return <MenuItem href={item.href} text={item.text} key={num} click={clickFun} classes = {classes} />
         });
         
         return(
