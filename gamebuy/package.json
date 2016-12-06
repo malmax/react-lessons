@@ -1,6 +1,6 @@
 {
-  "name": "lesson03",
-  "version": "1.0.0",
+  "name": "gamebuy",
+  "version": "0.1.0",
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
@@ -23,9 +23,14 @@
     "html-webpack-plugin": "~2.24.1",
     "style-loader": "~0.13.1",
     "url-loader": "~0.5.7",
-    "webpack": "~1.13.3"
+    "webpack": "~1.13.3",
+    "babel-plugin-react-html-attrs":"~2.0.0",
+    "node-sass": "~3.13.0",    
+    "sass-loader":"~4.0.2"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1",
     "json-loader": "^0.5.4",
     "react": "~15.4.1",
     "react-dom": "~15.4.1"

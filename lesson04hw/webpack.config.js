@@ -14,12 +14,12 @@ var context = path.join(__dirname,'src');
 module.exports = {
     //context: context,
     entry: [
-        path.join(__dirname,'src','lesson03hw'),
+        path.join(__dirname,'src','lesson03'),
     ], //входной файл, может быть несколько через массив
     output: { //выходной путь, выходной файл. в нижнем регистре
         path: path.join(__dirname, 'dist'),
         // TODO: почему [name] равен main? Хотя входной файл lesson02hw
-        filename: '[name].js' //[name]_[hash].[ext] оригинальное название входного файла, хэш и расширение
+        filename: 'lesson03.js' //[name]_[hash].[ext] оригинальное название входного файла, хэш и расширение
     },
     module: {
         loaders: [{
@@ -31,40 +31,15 @@ module.exports = {
                 presets: ['react','es2015','stage-0'],
             }
         },{
-            test: /\.sass$/,
-            loader: 'style!css!sass',  
-            // exclude: /node_modules/,
-        },
-        {
             test: /\.css$/,
-            loader: 'style!css',
-            // exclude: /node_modules/,
+            loader: 'style-loader!css-loader',
         },{
             test: /\.json$/,
             loader: 'json',
-        },
-        {
-            test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[ext]'
-        }, {
-            test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/font-woff2&name=./fonts/[name].[ext]'
-        }, {
-            test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/octet-stream&name=./fonts/[name].[ext]'
-        }, {
-            test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/font-otf&name=./fonts/[name].[ext]',
-        }, {
-            test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'file?name=./fonts/[name].[ext]'
-        }, {
-            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=image/svg+xml&name=./fonts/[name].[ext]'
         }]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.css','.sass'] //расширения какие webpack будет воспринимать и обрабатывать
+        extensions: ['', '.js', '.jsx', '.css'] //расширения какие webpack будет воспринимать и обрабатывать
         //modulesDirectories: ['node_modules','bower_components']
     },
     plugins: [
@@ -72,10 +47,6 @@ module.exports = {
         new HtmlWebpackPlugin({ 
             template: path.join(__dirname,'src','index.html'), //берет этот файл, добавляет output файл с вебпака
             filename: path.join(__dirname,'dist','index.html'), // и сохраняет сюда
-        }),
-         new webpack.ProvidePlugin({
-            'jQuery': 'jquery',
-            '$': 'jquery'
         }),
         new BrowserSyncPlugin({ // обновляет страницу и хостит
             host: 'localhost',
