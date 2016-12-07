@@ -13,7 +13,9 @@ import LayoutBlogPage from './app/pages/LayoutBlogPage';
 ReactDOM.render(
     <div>
         <Header title="My Blog" />
-        <LayoutBlogPage blogId="2" />
-        <Footer />
+        <LayoutBlogPage blogId="2">
+            <Footer />
+        </LayoutBlogPage>
+        
     </div>,
      document.getElementById('app')); //Отрисовка компонента в блок app

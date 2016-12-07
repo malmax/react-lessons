@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from './Link';
 
-import "../../../style/components/Menu.sass";
+import "../../style/components/Menu.sass";
 
 export default class Menu extends React.Component {
     constructor(props) {

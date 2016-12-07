@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Comment from './Comment';
+import "../../style/components/CommentList";
 
 export default class CommentList extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ export default class CommentList extends React.Component {
                                 });                      
         
         return(
-            <div>
+            <div className="comment-list">
                 {comments}
             </div>
         );

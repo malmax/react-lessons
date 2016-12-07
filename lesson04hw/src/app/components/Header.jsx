@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from './Menu';
+import '../../style/components/Header';
 
 export default class Header extends React.Component {
 

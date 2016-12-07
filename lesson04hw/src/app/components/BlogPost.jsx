@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../../style/components/BlogPost';
 
 export default class BlogPost extends React.Component {
     constructor(props) {
@@ -43,7 +43,7 @@ export default class BlogPost extends React.Component {
         return(
             <div>
                 
-                <h1>{blogData.title}</h1>
+                <h1>{blogData.title} (id: {this.props.blogId})</h1>
 
                  
                 <p className="lead">
