@@ -25,7 +25,7 @@ export default class CommentList extends React.Component {
             $.ajax({
                 url: 'https://jsonplaceholder.typicode.com/comments?postId='+this.props.blogId,
                 method: 'GET',
-                success: (data)=>{  setInterval(resolve(data), 3000) },
+                success: (data)=>{  setInterval(resolve.bind(this,data), 6000) },
                 error: (err) => { reject(err) }
             })
         }).then((data) => {

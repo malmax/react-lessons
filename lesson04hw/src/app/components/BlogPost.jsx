@@ -22,7 +22,7 @@ export default class BlogPost extends React.Component {
             $.ajax({
                 url: 'https://jsonplaceholder.typicode.com/posts/'+this.props.blogId,
                 method: 'GET',
-                success: (data)=>{ setInterval(resolve(data), 1000) },
+                success: (data)=>{ setInterval(resolve(data), 3000) },
                 error: (err) => { reject(err) }
             })
         }).then((data) => {
