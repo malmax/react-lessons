@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, browserHistory } from 'react-router';
 
-export default class Main extends React.Component {
+export default class HomePage extends React.Component {
     constructor(props) {
         super(props);
         

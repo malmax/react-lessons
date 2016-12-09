@@ -5,7 +5,7 @@ import { Router, Route, browserHistory, IndexRoute, Redirect } from 'react-route
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 
-import Main from './pages/Main.jsx';
+import HomePage from './pages/HomePage.jsx';
 import ArticlePage from './pages/ArticlePage.jsx';
 import ArticleId from './pages/ArticleId.jsx';
 import Comments from './pages/Comments.jsx';
@@ -24,9 +24,9 @@ ReactDOM.render(
     <Router history={browserHistory}>
     
         <Route path="/" component={Default} >            
-            <IndexRoute component={Main} /> 
+            <IndexRoute component={HomePage} /> 
             <Route path="/comments" component={Comments} />
-            <Route path="/articles" component={ArticlePage} onEnter={onEnter}>
+            <Route path="/blogs" component={ArticlePage} onEnter={onEnter}>
                 <Route path=":blogId" component={ArticleId} />
             </Route>
             <Redirect to="/articles" from="/blog" />  
