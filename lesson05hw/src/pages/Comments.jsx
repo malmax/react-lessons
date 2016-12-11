@@ -1,51 +1,54 @@
-// https://jsonplaceholder.typicode.com/comments
-
 import React from 'react';
-import CommentList from "../components/CommentList";
+import Comment from '../components/Comment.jsx';
+import "../style/components/CommentList";
+import CommentService from '../services/CommentService.js';
 
 export default class Comments extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            mounted: false,
-            loaded: false
-        }
 
-        let p = new Promise((resolve,reject)=>{
-            $.ajax({
-                url: 'https://jsonplaceholder.typicode.com/comments',
-                method: 'GET',
-                success: (response) => {
-                    resolve(response);
-                },
-                error: (err) => {
-                    reject(err);
-                }
-            });
-        }).then((data)=>{
-            this.data = data;
-            this.setState({loaded: true});
-            // console.log(data);
+        this.state = {
+            loaded: false,
+            mounted: false,
+            commentData: null
+        };
+
+        // {
+        //     "postId": 1,
+        //     "id": 1,
+        //     "name": "id labore ex et quam laborum",
+        //     "email": "Eliseo@gardner.biz",
+        //     "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+        // }
+
+        CommentService.getAllComments().then((data) => {
+            
+            this.setState({loaded: true, commentData: data});
+            
         });
     }
 
-    componentDidMount() {
-        this.setState({
-            mounted: true
-        })
+    componentWillMount() {
+        this.setState({mounted: true});
     }
 
-    render() {
+    render() { 
+        if(!(this.state.loaded && this.state.mounted))
+            return <span>Loading comments...</span>;
+
+        let comments = this.state.commentData.reverse().map((item,i) => {
+                                    if(i > 50) return false;
+                                    return <Comment {...item} date={new Date(new Date().getTime() * Math.random()).toISOString()} key={'commentId' + item.id} />                                    
+                                });                      
+        
         return(
-              
-                <div className="container-fluid theme-showcase" role="main"> 
-                {
-                    this.state.loaded && this.state.mounted
-                    ? <CommentList comments={this.data}></CommentList>
-                    : <span> Loading data...</span>
-                }     
-                </div>
-            
+            <div className="comment-list">
+                {comments}
+            </div>
         );
+    }
+
+    static PropTypes = {
+        blogId: React.PropTypes.number.isRequired
     }
 }

@@ -21,7 +21,7 @@ export default class CommentList extends React.Component {
         //     "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
         // }
 
-        CommentService.then((data) => {
+        CommentService.getCommentsByBlogId(this.props.blogId).then((data) => {
             
             this.setState({loaded: true, commentData: data});
             

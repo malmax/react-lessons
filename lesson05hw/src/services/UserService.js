@@ -1,22 +1,22 @@
-class CommentService {
+class UserService {
 
-    static getAllComments() {
-        return CommentService.createRequestHelper();
+    static getAllUsers() {
+        return UserService.createRequestHelper();
     }
 
-    static getCommentsByBlogId(blogId = 1) {
-        return CommentService.createRequestHelper(blogId);
+    static getUserById(userId = 1) {
+        return UserService.createRequestHelper(userId);
     }
 
-    static createRequestHelper(blogId) {
+    static createRequestHelper(userId) {
 
         let srcStr="";
-        if(blogId)
-             srcStr = `?postId=${blogId}`;            
+        if(userId)
+             srcStr = `?id=${userId}`;            
             
         return (new Promise((resolve, reject) => {
                     $.ajax({
-                        url: `https://jsonplaceholder.typicode.com/comments${srcStr}`,
+                        url: `https://jsonplaceholder.typicode.com/users${srcStr}`,
                         method: 'GET',
                         success: (response) => {
                             resolve(response);
@@ -29,4 +29,4 @@ class CommentService {
     }
 }
 
-export default CommentService;
+export default UserService;

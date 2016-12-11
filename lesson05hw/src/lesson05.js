@@ -1,5 +1,5 @@
 // Малахов Максим
-
+// Вопросы:
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute, Redirect } from 'react-router';
@@ -12,6 +12,9 @@ import BlogListPage from './pages/BlogListPage.jsx';
 import BlogPage from './pages/BlogPage.jsx';
 import Comments from './pages/Comments.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
+
+import UserListPage from './pages/UserListPage.jsx';
+import UserPage from './pages/UserPage.jsx';
 
 import Default from './layouts/Default.jsx';
 
@@ -28,6 +31,9 @@ ReactDOM.render(
             <Route path="/comments" component={Comments} />
             <Route path="/blogs" component={BlogListPage}>
                 <Route path=":blogId" component={BlogPage} />
+            </Route>
+            <Route path="/users" component={UserListPage}>
+                <Route path=":userId" component={UserPage} />
             </Route>
             <Redirect to="/articles" from="/blog" />  
             <Route path="*" component={PageNotFound} />
