@@ -1,3 +1,5 @@
+// Малахов Максим
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute, Redirect } from 'react-router';
@@ -6,8 +8,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 
 import HomePage from './pages/HomePage.jsx';
-import ArticlePage from './pages/ArticlePage.jsx';
-import ArticleId from './pages/ArticleId.jsx';
+import BlogListPage from './pages/BlogListPage.jsx';
+import BlogPage from './pages/BlogPage.jsx';
 import Comments from './pages/Comments.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 
@@ -15,9 +17,7 @@ import Default from './layouts/Default.jsx';
 
 let app = document.getElementById('app');
 
-let onEnter = function() {
 
-}
 // <IndexRoute component={Main} />
 //
 ReactDOM.render(
@@ -26,8 +26,8 @@ ReactDOM.render(
         <Route path="/" component={Default} >            
             <IndexRoute component={HomePage} /> 
             <Route path="/comments" component={Comments} />
-            <Route path="/blogs" component={ArticlePage} onEnter={onEnter}>
-                <Route path=":blogId" component={ArticleId} />
+            <Route path="/blogs" component={BlogListPage}>
+                <Route path=":blogId" component={BlogPage} />
             </Route>
             <Redirect to="/articles" from="/blog" />  
             <Route path="*" component={PageNotFound} />
