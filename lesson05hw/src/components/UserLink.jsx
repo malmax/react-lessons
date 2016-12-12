@@ -22,9 +22,9 @@ export default class UserListPage extends React.Component {
         // real-time e-markets"     }   },
 
         UserService
-            .getAllUsers()
+            .getUserById(this.props.userId)
             .then((data) => {
-                this.setState({loaded: true, usersData: data});
+                this.setState({loaded: true, userData: data});
             });
     }
 
@@ -36,34 +36,8 @@ export default class UserListPage extends React.Component {
         if (!(this.state.loaded && this.state.mounted)) 
             return <span>Loading users...</span>;
         
-        const users = this
-            .state
-            .usersData
-            .reverse()
-            .map((item, i) => {
-                return (
-                    <div className="panel panel-default" key={`user${item.id}`}>
-                        <div className="panel-heading">
-                            <h3 className="panel-title">
-                                <Link to={`/users/${item.id}`}>{item.name}</Link>
-                                <small> ({item.username})</small>
-                            </h3>
-                            <p>Email: {item.email}</p>
-                        </div>
-                        <div className="panel-body">
-                            <p>Phone: {item.phone}</p>
-                            <p>Website: {item.website}</p>
-                            <p>Address: {Object.values(item.address).toString()}</p>
-                            <p>Company: {Object.values(item.company).toString()}</p>
-                        </div>
-                    </div>
-                );
-            });
-
         return (
-            <div className="user-list">
-                {this.props.children || users}
-            </div>
+            <Link to={`/users/${this.state.userData.id}`}>{this.state.userData.name}</Link>
         );
     }
 

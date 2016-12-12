@@ -1,6 +1,8 @@
 import React from 'react';
 import BlogService from '../services/BlogService.js';
 import {browserHistory} from 'react-router';
+import UserLink from '../components/UserLink.jsx';
+
 import '../style/components/BlogPost';
 
 export default class BlogPost extends React.Component {
@@ -14,9 +16,7 @@ export default class BlogPost extends React.Component {
         };
 
         // { "userId": 1, "id": 1, "title": "sunt ...", "body": "quia ..." }
-        BlogService.getBlogById(this.props.blogId).then(data => this.setState({
-                                                                                blogData: data,
-                                                                                loaded: true }));
+        BlogService.getBlogById(this.props.blogId).then(data => this.setState({blogData: data,loaded: true }));
 
         this.handleBack = this.handleBack.bind(this);
     }
@@ -41,14 +41,13 @@ export default class BlogPost extends React.Component {
         
         return (
             <div>
-                <button onClick={this.handleBack} type="button" className="btn btn-primary btn-lg">Вернуться назад</button>
+                <button onClick={this.handleBack} type="button" className="btn btn-primary">Вернуться назад</button>
 
                 <h1>{blogData.title}
                     <small>(id: {blogData.id})</small></h1>
 
                 <p className="lead">
-                    by
-                    <a href="#">{blogData.title}</a>
+                    by <UserLink userId = {blogData.userId} />
                 </p>
 
                 <hr/>

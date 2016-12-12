@@ -21,11 +21,22 @@ export default class CommentList extends React.Component {
         //     "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
         // }
 
-        CommentService.getCommentsByBlogId(this.props.blogId).then((data) => {
-            
-            this.setState({loaded: true, commentData: data});
-            
-        });
+        if(this.props.blogId) { // если задан номер блога
+            CommentService.getCommentsByBlogId(this.props.blogId).then((data) => {            
+                this.setState({loaded: true, commentData: data});            
+            });
+        }
+        else if(this.props.userId) { // если задан пользователь
+            CommentService.getCommentsByUserId(this.props.userId).then((data) => {            
+                this.setState({loaded: true, commentData: data});            
+            });
+        }
+        else { // если ничего не задано то выводим последние 50 комментов
+            CommentService.getAllComments().then((data) => {            
+                this.setState({loaded: true, commentData: data.reverse().slice(1,50)});            
+            });
+        }
+        
     }
 
     componentWillMount() {

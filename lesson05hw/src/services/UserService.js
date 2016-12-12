@@ -12,8 +12,8 @@ class UserService {
 
         let srcStr="";
         if(userId)
-             srcStr = `?id=${userId}`;            
-            
+             srcStr = `/${userId}`;            
+        
         return (new Promise((resolve, reject) => {
                     $.ajax({
                         url: `https://jsonplaceholder.typicode.com/users${srcStr}`,

@@ -32,6 +32,21 @@ class BlogService {
         return BlogService.createRequestHelper(blogId);
     }
 
+    static getBlogsByUserId(userId = 1) {
+        return (new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: `https://jsonplaceholder.typicode.com/posts?userId=${userId}`,
+                        method: 'GET',
+                        success: (response) => {
+                            resolve(response);
+                        },
+                        error: (err) => {
+                            reject(err);
+                        }
+                    });
+            }));
+    }
+
     static createRequestHelper(blogId = 1) {
 
         if(!blogId)

@@ -12,11 +12,16 @@ export default class BlogListPage extends React.Component {
             'messages': []
         };
 
-        this.blogs = Promise
-            .all(BlogService.getBlogs())
+        if(this.props.userId) {
+            BlogService.getBlogsByUserId().then(data => this.setState({'loaded': true, 'messages': data}));
+        }
+        else {
+            Promise.all(BlogService.getBlogs())
             .then(data => {
                 this.setState({'loaded': true, 'messages': data});
             });
+        }
+        
 
     }
 
@@ -25,19 +30,16 @@ export default class BlogListPage extends React.Component {
     }
 
     render() {
-// console.log(this.props.children);
+
         return (
             <div>
-                <div className="container" role="main">
-
                     {this.state.loaded && this.state.mounted
                         ? this.props.children || this
                             .state
                             .messages
                             .map((item, i) => <BlogInList key={`blog${i}`} {...item}/>)
                         : <span>Loading data...</span>
-}
-                </div>
+                    }
             </div>
         );
     }

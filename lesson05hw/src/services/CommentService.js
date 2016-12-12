@@ -8,6 +8,10 @@ class CommentService {
         return CommentService.createRequestHelper(blogId);
     }
 
+    static getCommentsByUserId(userId = 1) {
+        // в jsonplaceholder.typicode.com нет связи между комментов и пользователем поэтому будем выдавть комменты к рандломному блогу
+        return CommentService.createRequestHelper(parseInt(100 * Math.random()));
+    }
     static createRequestHelper(blogId) {
 
         let srcStr="";
