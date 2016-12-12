@@ -1,5 +1,6 @@
 // Малахов Максим
-// Вопросы:
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute, Redirect } from 'react-router';
