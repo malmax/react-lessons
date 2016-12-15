@@ -7,7 +7,6 @@ class ArticlesStore extends EventEmitter {
         super();
 
         this.articles = [];
-
         this.handleActions = this.handleActions.bind(this);
     }
 
