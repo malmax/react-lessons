@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import dispatcher from '../dispatcher.js';
-import { ADD_BLOG, LOAD_BLOGS_FROM_SERVER, DELETE_BLOG, EDIT_BLOG, SHOW_EDIT_MODAL } from '../constants/Blogs.js';
+import { ADD_BLOG, DELETE_BLOG, EDIT_BLOG, SHOW_EDIT_MODAL } from '../constants/Blogs.js';
 import BlogService from '../services/BlogService.js';
 
 class BlogStore extends EventEmitter {
@@ -8,7 +8,13 @@ class BlogStore extends EventEmitter {
         super(props);
         
         this.blogs = [];
-        
+                            
+        // загружаем блоги из сервиса
+        Promise.all(BlogService.getBlogs()).then((data) => {
+            data.forEach(blog => 
+                this.addBlog(blog)
+            );
+        });  
     }
 
     addBlog({id = parseInt(Math.random()*100) , title = "пустой заголовок", body, userId = 1}) {        
@@ -43,24 +49,6 @@ class BlogStore extends EventEmitter {
         switch(action.type) {
             case ADD_BLOG:                
                 this.addBlog(action.payload);
-            break;
-
-            case LOAD_BLOGS_FROM_SERVER:   
-                // только если нет сообщений
-                // вызывается каждый раз при открытии страницы с блогами
-
-                // вопрос к преподавателю: правильно ли здесь размещать первоначальное обращение к сервису?
-                if(this.blogs.length) {
-                    this.emit('changeBlogList');
-                    break;
-                }
-                    
-                // загружаем блоги из сервиса
-                Promise.all(BlogService.getBlogs()).then((data) => {
-                    data.forEach(blog => 
-                        this.addBlog(blog)
-                    );
-                });  
             break;
 
             case EDIT_BLOG:

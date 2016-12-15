@@ -43,8 +43,19 @@ class Modal extends React.Component {
         blogStore.removeListener( 'showEditForm', this.showModal );
     }
 
+    handleChange = (evt) => {
+        const editBlogFormData = {...this.state};
+        Object.keys(this.formEdit).forEach(key => {
+            editBlogFormData[key] = this.formEdit[key].value;            
+        });
+        // this.setState({
+        //     ...editBlogFormData
+        // });
+    }
+
     render() {
         
+        const new
         return (
             <div className="modal fade" id="myModal" tabIndex="-1" role="dialog">
                 <div className="modal-dialog" role="document">
@@ -59,21 +70,21 @@ class Modal extends React.Component {
                             <div className="form-group">
                                 <label htmlFor="inputTitle" className="col-sm-2 control-label">Заголовок статьи</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" id="inputTitle" ref={(input) => this.formEdit.title = input} defaultValue={this.state.title} />
+                                    <input type="text" className="form-control" id="inputTitle" ref={(input) => this.formEdit.title = input} onChange = { this.handleChange} value={this.state.title} />
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="inputAuthorId" className="col-sm-2 control-label">ID автора статьи</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" ref={(input) => this.formEdit.authorId = input} id="inputAuthorId" defaultValue={this.state.userId} />
+                                    <input type="text" className="form-control" ref={(input) => this.formEdit.authorId = input} id="inputAuthorId" onChange = { this.handleChange} value={this.state.userId} />
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="inputBody" className="col-sm-2 control-label">Основное сообщение</label>
                                 <div className="col-sm-10">
-                                    <textarea className="form-control" ref={(input) => this.formEdit.body = input} rows="3" id="inputBody" defaultValue={this.state.body} ></textarea>
+                                    <textarea className="form-control" ref={(input) => this.formEdit.body = input} rows="3" id="inputBody" onChange = { this.handleChange} value={this.state.body} ></textarea>
                                 </div>
                             </div>
                             

@@ -33,8 +33,6 @@ export default class BlogListPage extends React.Component {
         // подписываемся на событие
         blogStore.addListener( 'changeBlogList', this.changeBlogList );
 
-        // запроашиваем загрузку дефолтных блогов
-        blogActions.loadBlogsFromServer(3);
     }
 
     componentWillUnmount() {  
