@@ -1,50 +1,33 @@
 import React from 'react';
 import Articles from '../components/Articles'
 import { Link, browserHistory } from 'react-router';
-import articlesActions from '../actions/Articles';
-import articlesStore from '../stores/ArticlesStore';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { createArticle } from '../actions/articlesActions';
 
-@connect((store) =>{
+@connect((store) => {
     return {
-        articles: store.articles
+        articles: store.articles.articles
     };
-});
+})
 export default class ArticlesPage extends React.Component {
     constructor(props) {
         super(props);
-        
-        this.state = {
-            articles: articlesStore.getArticles()
-        };
 
         this.addArticle = this.addArticle.bind(this);
-        this.refresh = this.refresh.bind(this);
-    }
-
-    componentWillMount() {
-        articlesStore.addListener('change', this.refresh);
-    }
-
-    componentWillUnmount() {
-        articlesStore.removeListener('change', this.refresh);
-    }
-
-    refresh() {
-        this.setState({
-            articles: articlesStore.getArticles()
-        });
     }
 
     addArticle({ title, message, author }) {
-        articlesActions.addArticle({title, message, author});
+        let article = { title, message, author };
+        let toDispatch = createArticle(article);
+
+        this.props.dispatch(toDispatch);
     }
 
     render() {
         return (
             <div class="container-fluid">
-                <Articles articles={this.state.articles} addArticle={this.addArticle} />
+                <Articles articles={this.props.articles} addArticle={this.addArticle} />
             </div>
         );
     }

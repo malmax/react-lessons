@@ -1,3 +1,8 @@
 export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
+
+export const LOAD_USERS_START = 'LOAD_USERS_START';
+export const LOAD_USERS_END = 'LOAD_USERS_END';
+export const LOAD_USERS_SUCCESS = 'LOAD_USERS_SUCCESS';
+export const LOAD_USERS_FAILURE = 'LOAD_USERS_FAILURE';

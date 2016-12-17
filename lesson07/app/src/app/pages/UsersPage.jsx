@@ -1,63 +1,36 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
-import userStore from '../stores/UsersStore';
-import { ADD_USER } from '../constants/Users';
 
+import { connect } from 'react-redux';
+import { loadUsers } from '../actions/usersActions';
+
+@connect((store) => {
+    return {
+        users: store.users.users,
+        isLoading: store.users.isLoading,
+        isLoaded: store.users.isLoaded,
+        error: store.users.error.message
+    };
+})
 export default class UsersPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = userStore.getState();
-        this.addUser = this.addUser.bind(this);
-        this.sub = null;
-    }
+        let toDispatch = loadUsers();
 
-    componentWillMount() {
-        this.sub = userStore.subscribe(() => {
-            this.setState(userStore.getState());
-        });
-    }
-
-    componentWillUnmount() {
-        this.sub();
-    }
-
-    addUser() {
-        let user = {
-            name: this.refs.name.value,
-            login: this.refs.login.value
-        };
-
-        userStore.dispatch({
-            type: ADD_USER,
-            payload: user
-        });
+        this.props.dispatch(toDispatch);
     }
 
     render() {
-        const users = this.state.users.map((user, index) => {
+        let users = (this.props.users || []).map((user) => {
             return (
-                <div key={index}>
-                    <div>{ user.name }</div>
-                    <div>{ user.login }</div>
-                </div>
+                <div>{user.id} {user.name}</div>
             );
         });
 
         return (
             <div class="container-fluid">
-                { users }
-                <form>
-                    <div class="form-group">
-                        <label for="name">UserName</label>
-                        <input type="text" ref="name" id="name" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="login">Login</label>
-                        <input type="text" ref="login" id="login" class="form-control" />
-                    </div>
-                    <button type="button" class="btn btn-primary" onClick={this.addUser}>Create</button>
-                </form>
+                { users.length ? users : "No users!" }
             </div>
         );
     }

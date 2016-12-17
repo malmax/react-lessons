@@ -1,17 +1,26 @@
-import { createStore, combineReducers,applyMiddleware } from 'redux'
-
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import promise from 'redux-promise-middleware';
 
-import articlesReducer from '../reducers/articlesReducer';
-import usersReducer from '../reducers/usersReducer';
+import articles from '../reducers/articlesReducer';
+import users from '../reducers/usersReducer';
 
 const reducer = combineReducers({
-    users: usersReducer,
-    articles: articlesReducer
+    users,
+    articles
 });
 
-const middleware = applyMiddleware(promise(), thunk, logger());
+// const logger_ = 
+//         (store) => 
+//             (next) => 
+//                 (action) => {
+//                     console.log(next, action, store);
+//                     next(action);
+//                 };
 
-const store = createStore(reducer,{users: [], articles:[]}, middleware)
+const middleWare = applyMiddleware(promise(), thunk, logger()); /*, logger_);*/
+
+const store = createStore(reducer, middleWare);
+
+export default store;

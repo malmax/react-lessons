@@ -1,25 +1,20 @@
 var path = require('path');
 var webpack = require('webpack');
-
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
-//AMD - define ['module','module', function() { }]
-//CommonJS - require / module.exports
+//AMD - define['module', 'module', function () {  }]
+//CommonJS - require/module.exports
 //ES6 - import/export
 
-
-
 module.exports = {
-    //context: context,
-    entry: [
-        path.join(__dirname,'src','main'),
-    ], //входной файл, может быть несколько через массив
-    output: { //выходной путь, выходной файл. в нижнем регистре
+    entry: {
+        app: path.join(__dirname, 'src', 'main.js')
+    },
+    output: {
         path: path.join(__dirname, 'dist'),
-        // TODO: почему [name] равен main? Хотя входной файл lesson02hw
-        filename: '[name].js' //[name]_[hash].[ext] оригинальное название входного файла, хэш и расширение
+        filename: '[name].js'
     },
     module: {
         loaders: [{
@@ -27,23 +22,21 @@ module.exports = {
             exclude: /node_modules/,
             loader: 'babel',
             query: {
-                //cacheDirectory: true, //кэширование
-                presets: ['react','es2015','stage-0'],
+                presets: [
+                    'react',
+                    'es2015',
+                    'stage-0'
+                ],
+                plugins: ['react-html-attrs', 'transform-decorators-legacy']
             }
-        },{
-            test: /\.sass$/,
-            loader: 'style!css!sass',  
-            // exclude: /node_modules/,
-        },
-        {
+        }, {
             test: /\.css$/,
-            loader: 'style!css',
-            // exclude: /node_modules/,
-        },{
-            test: /\.json$/,
-            loader: 'json',
-        },
-        {
+            loader: 'style!css'
+        } ,{
+            test: /\.sass$/,
+            loader: 'style!css!sass',
+            exclude: /node_modules/
+        }, {
             test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
             loader: 'url?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[ext]'
         }, {
@@ -64,20 +57,19 @@ module.exports = {
         }]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.css','.sass'] //расширения какие webpack будет воспринимать и обрабатывать
-        //modulesDirectories: ['node_modules','bower_components']
+        extensions: ['', '.js', '.jsx', '.sass', '.css']
     },
     plugins: [
-        new webpack.NoErrorsPlugin(), // запрещает создание выходных файлов если есть хоть одна ошибка
-        new HtmlWebpackPlugin({ 
-            template: path.join(__dirname,'src','index.html'), //берет этот файл, добавляет output файл с вебпака
-            filename: path.join(__dirname,'dist','index.html'), // и сохраняет сюда
+        new webpack.NoErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, 'src', 'index.html'),
+            filename: path.join(__dirname, 'dist', 'index.html')
         }),
-         new webpack.ProvidePlugin({
+        new webpack.ProvidePlugin({
             'jQuery': 'jquery',
             '$': 'jquery'
         }),
-        new BrowserSyncPlugin({ // обновляет страницу и хостит
+        new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
             server: {
