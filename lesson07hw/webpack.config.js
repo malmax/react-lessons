@@ -29,6 +29,7 @@ module.exports = {
             query: {
                 //cacheDirectory: true, //кэширование
                 presets: ['react','es2015','stage-0'],
+                plugins: ["transform-decorators-legacy"]
             }
         },{
             test: /\.sass$/,

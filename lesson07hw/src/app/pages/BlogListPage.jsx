@@ -29,7 +29,7 @@ export default class BlogListPage extends React.Component {
        
         let toDispatch = loadBlogs();
         this.props.dispatch(toDispatch);
-        
+
         if(this.props.userId) {
             BlogService.getBlogsByUserId().then(data => this.setState({'loaded': true, 'messages': data}));
         }
@@ -56,7 +56,7 @@ export default class BlogListPage extends React.Component {
 
         return (
             <div>
-                    {this.props.blogs.length
+                    {this.props.isLoaded
                         ? this.props.children || this
                             .props
                             .blogs

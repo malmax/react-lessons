@@ -1,17 +1,23 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-import blogActions from '../actions/BlogActions.js';
+import { toggleModalForm } from '../actions/blogsActions';
 
+import { connect } from 'react-redux';
+
+@connect(store => {
+    return {
+        isLoaded: store.blogs.isLoaded
+    };
+})
 export default class BlogInList extends React.Component {
     constructor(props) {
         super(props);
 
     }
 
-
     editBlogClick = () => {
-        blogActions.showEditBlogForm(this.props.id);
+        this.props.dispatch(toggleModalForm(this.props.id));
     }
 
     deleteBlogClick = () => {

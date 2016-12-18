@@ -8,6 +8,13 @@ export function addBlog(newBlog) {
     }
 }
 
+export function toggleModalForm(blogId = null) {
+    return {
+        type: constants.TOGGLE_EDIT_MODAL,
+        payload: blogId
+    }
+}
+
 export function loadBlogs() {
     // Вопрос к преподавателю:
     // зачем нужно возвращать именно функцию?
