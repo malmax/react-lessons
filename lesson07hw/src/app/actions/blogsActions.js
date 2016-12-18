@@ -8,6 +8,20 @@ export function addBlog(newBlog) {
     }
 }
 
+export function removeBlog(blogId) {
+    return {
+        type: constants.DELETE_BLOG,
+        payload: blogId
+    }
+}
+
+export function editBlog(editedBlog) {
+    return {
+        type: constants.EDIT_BLOG,
+        payload: editedBlog
+    }
+}
+
 export function toggleModalForm(blogId = null) {
     return {
         type: constants.TOGGLE_EDIT_MODAL,

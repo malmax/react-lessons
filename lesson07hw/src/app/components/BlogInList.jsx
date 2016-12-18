@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-import { toggleModalForm } from '../actions/blogsActions';
+import { toggleModalForm, removeBlog } from '../actions/blogsActions';
 
 import { connect } from 'react-redux';
 
@@ -21,7 +21,7 @@ export default class BlogInList extends React.Component {
     }
 
     deleteBlogClick = () => {
-        blogActions.removeBlog(this.props.id);
+        this.props.dispatch(removeBlog(this.props.id));
     }
 
     render() {

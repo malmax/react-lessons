@@ -1,7 +1,7 @@
 import React from 'react';
 import store from '../stores/store';
 
-import { toggleModalForm } from '../actions/blogsActions';
+import { toggleModalForm, editBlog } from '../actions/blogsActions';
 
 import { connect } from 'react-redux';
 
@@ -17,42 +17,35 @@ class Modal extends React.Component {
         
         // здесь будут храниться данные из измененной формы
         this.formEdit = {};
-
         // значения для "заливки в форму"        
         this.modalBlog = {};        
     }
     
     editBlogFormClick = () => {
-        const editBlogFormData = {...this.state};
+        const editBlogFormData = {...this.modalBlog};
         Object.keys(this.formEdit).forEach(key => {
             editBlogFormData[key] = this.formEdit[key].value;            
         });
 
-        blogActions.editBlog(editBlogFormData);
+        this.props.dispatch(editBlog(editBlogFormData));
     }
 
-    // showModal = (blogId) => {
-        
-    //     const blogData = blogStore.getBlogs(blogId);
-        
-    //     this.setState({ ...blogData });
-
-    // }
-
     handleChange = (evt) => {
-        const editBlogFormData = {...this.state};
+        const editBlogFormData = {...this.modalBlog};
         Object.keys(this.formEdit).forEach(key => {
             editBlogFormData[key] = this.formEdit[key].value;            
         });
+
+        this.props.dispatch(editBlog(editBlogFormData));
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('recieve', nextProps);
+ 
         // если появился флаг то выводим форму
         if( nextProps.showModalFor ) { 
-            console.log('recieved');
             this.modalBlog = nextProps.blogs.filter( item => item.id === nextProps.showModalFor )[0];
             
+            // записываем значения в форму
             Object.keys(this.formEdit).forEach(key => {
                 this.formEdit[key].value = this.modalBlog[key] || "";            
             });
@@ -60,10 +53,6 @@ class Modal extends React.Component {
             //убираем флаг что надо открыть модальную форму
             this.props.dispatch(toggleModalForm());
         }
-    }
-    componentWillUpdate() {
-        console.log('update',this.props);
-        
     }
 
     render() {       
@@ -82,7 +71,7 @@ class Modal extends React.Component {
                             <div className="form-group">
                                 <label htmlFor="inputTitle" className="col-sm-2 control-label">Заголовок статьи</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" id="inputTitle" ref={(input) => this.formEdit.title = input} />
+                                    <input type="text" onChange={this.handleChange} className="form-control" id="inputTitle" ref={(input) => this.formEdit.title = input} />
                                 </div>
                             </div>
 
@@ -104,7 +93,7 @@ class Modal extends React.Component {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" onClick={this.editBlogFormClick}>Save changes</button>
+                        <button type="button" className="btn btn-primary" onClick={this.editBlogFormClick} data-dismiss="modal">Save changes</button>
                     </div>
                     </div>
                 </div>
