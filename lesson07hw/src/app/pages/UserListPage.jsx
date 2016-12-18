@@ -1,16 +1,18 @@
 import React from 'react';
 import UserService from '../services/UserService.js';
 import {Link} from 'react-router';
+import { connect } from 'react-redux';
+import { loadUsers } from '../actions/usersActions';
 
+@connect(store => {
+    return {
+        users: store.users.users,
+        isLoaded: store.users.isLoaded
+    };
+})
 export default class UserListPage extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            loaded: false,
-            mounted: false,
-            usersData: null
-        };
 
         //   {     "id": 1,     "name": "Leanne Graham",     "username": "Bret",
         // "email": "Sincere@april.biz",     "address": {       "street": "Kulas Light",
@@ -21,26 +23,17 @@ export default class UserListPage extends React.Component {
         // "catchPhrase": "Multi-layered client-server neural-net",       "bs": "harness
         // real-time e-markets"     }   },
 
-        UserService
-            .getAllUsers()
-            .then((data) => {
-                this.setState({loaded: true, usersData: data});
-            });
+        this.props.dispatch(loadUsers());
+
     }
 
-    componentWillMount() {
-        this.setState({mounted: true});
-    }
+    
 
     render() {
-        if (!(this.state.loaded && this.state.mounted)) 
+        if (!this.props.isLoaded) 
             return <span>Loading users...</span>;
         
-        const users = this
-            .state
-            .usersData
-            .reverse()
-            .map((item, i) => {
+        const users = this.props.users.reverse().map((item, i) => {
                 return (
                     <div className="panel panel-default" key={`user${item.id}`}>
                         <div className="panel-heading">

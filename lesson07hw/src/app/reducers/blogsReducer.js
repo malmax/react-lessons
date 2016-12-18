@@ -45,8 +45,8 @@ export default function blogsReducer(state = { blogs: [], isLoading: false, isLo
         }
         case constants.LOAD_BLOGS_SUCCESS: {
             // если блогов нет
-            if(! state.blogs.length) {
-                const loadedBlogs = action.payload.filter(item => parseInt(Math.random()*20) == 2);
+            if(! state.isLoaded) {
+                const loadedBlogs = action.payload; //.filter(item => parseInt(Math.random()*20) == 2);
                 state = { ...state, blogs: loadedBlogs, isLoaded: true };
             }
             break;

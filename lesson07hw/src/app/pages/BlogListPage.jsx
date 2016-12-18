@@ -29,11 +29,8 @@ export default class BlogListPage extends React.Component {
        
         let toDispatch = loadBlogs();
         this.props.dispatch(toDispatch);
-
-        if(this.props.userId) {
-            BlogService.getBlogsByUserId().then(data => this.setState({'loaded': true, 'messages': data}));
-        }
         
+        this.blogs = [];
         // Здесь будут хранитсья ссылки на инпуты формы
         this.formAdd = {};
     }
@@ -47,18 +44,21 @@ export default class BlogListPage extends React.Component {
         });
         // Вызываем action addBlog
         const toDispatch = addBlog(addBlogFormData);
-
         this.props.dispatch(toDispatch);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.blogs = nextProps.blogs;
+        if(this.props.userId)
+            this.blogs = nextProps.blogs.filter(blog1 => blog1.userId == this.props.userId );
+    }
 
     render() {
 
         return (
             <div>
                     {this.props.isLoaded
-                        ? this.props.children || this
-                            .props
+                        ? this.props.children || this                      
                             .blogs
                             .map((item, i) => <BlogInList key={`blog${i}`} {...item} />)
                         : <span>Loading data...</span>
@@ -76,7 +76,7 @@ export default class BlogListPage extends React.Component {
                         <div className="form-group">
                             <label htmlFor="inputAuthorId" className="col-sm-2 control-label">ID автора статьи</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" ref={(input) => this.formAdd.authorId = input} id="inputAuthorId" defaultValue="1" />
+                                <input type="text" className="form-control" ref={(input) => this.formAdd.authorId = input} id="inputAuthorId" defaultValue={this.props.userId || 1} />
                             </div>
                         </div>
 

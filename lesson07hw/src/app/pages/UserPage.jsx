@@ -1,20 +1,23 @@
 import React from 'react';
-import UserService from '../services/UserService.js';
+
 import {Link, browserHistory} from 'react-router';
 import CommentList from '../components/CommentList.jsx';
 import BlogListPage from '../pages/BlogListPage.jsx';
 
+import { connect } from 'react-redux';
+import { loadUsers } from '../actions/usersActions';
+
 import '../../style/pages/UserPage.sass';
 
+@connect(store => {
+    return {
+        users: store.users.users,
+        isLoaded: store.users.isLoaded
+    };
+})
 export default class UserPage extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            loaded: false,
-            mounted: false,
-            usersData: null
-        };
 
         //   {     "id": 1,     "name": "Leanne Graham",     "username": "Bret",
         // "email": "Sincere@april.biz",     "address": {       "street": "Kulas Light",
@@ -25,17 +28,8 @@ export default class UserPage extends React.Component {
         // "catchPhrase": "Multi-layered client-server neural-net",       "bs": "harness
         // real-time e-markets"     }   },
 
-        UserService
-            .getUserById(this.props.params.userId)
-            .then((data) => {
-                this.setState({loaded: true, usersData: data});
-            });
-
+        this.props.dispatch(loadUsers());
         this.handleBack = this.handleBack.bind(this);
-    }
-
-    componentWillMount() {
-        this.setState({mounted: true});
     }
 
     handleBack() {
@@ -43,10 +37,11 @@ export default class UserPage extends React.Component {
     }
 
     render() {
-        if (!(this.state.loaded && this.state.mounted)) 
+        if (! this.props.isLoaded) 
             return <span>Loading users...</span>;
         
-        let item = this.state.usersData            
+        const item = this.props.users.filter(user1 => user1.id == this.props.params.userId)[0];
+                   
         const userInfo = (<div className="panel panel-default" key={`user${item.id}`}>
                                 <div className="panel-heading">
                                     <h3 className="panel-title">
