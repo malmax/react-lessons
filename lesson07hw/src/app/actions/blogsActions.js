@@ -30,8 +30,10 @@ export function toggleModalForm(blogId = null) {
 }
 
 export function loadBlogs() {
-    // Вопрос к преподавателю:
-    // зачем нужно возвращать именно функцию?
+    // Вопросы к преподавателю:
+    // 1. зачем нужно возвращать именно функцию?
+    // 2. этот экшен вызывается в констракте BlogsListPage каждый раз при монтировании компонента
+    // не лучше было бы его вызывать в сторе при инициализации?
     return function (dispatch) {
         dispatch({ type: constants.LOAD_BLOGS_START });
 

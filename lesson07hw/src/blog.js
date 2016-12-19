@@ -1,10 +1,12 @@
 // Малахов Максим
 
 // Вопрос к преподавателю:
-// в actions
-// export function loadBlogs() {
-    // зачем нужно возвращать именно функцию?
-    // return function (dispatch) {
+// Вопросы к преподавателю:
+// 1. зачем нужно возвращать именно функцию в экшенах?
+// 2. loadBlogs вызывается в констракте BlogsListPage каждый раз при монтировании компонента
+// не лучше было бы его вызывать в сторе при инициализации?
+// 3. Где стоит производить переборку массива, например, blogs. В render - все норм, пытался в componentWillReceiveProps срабатывало не всегда
+
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -30,8 +32,6 @@ import store from './app/stores/store';
 let app = document.getElementById('app');
 
 
-// <IndexRoute component={Main} />
-//
 ReactDOM.render(
     <Provider store={store} >
     <Router history={browserHistory}>

@@ -12,6 +12,7 @@ export function loadUsers() {
                 dispatch({ type: constants.LOAD_USERS_END });
             })
             .catch( error => {
+                console.error(`https://jsonplaceholder.typicode.com/users`, error.message);
                 dispatch({ type: constants.LOAD_USERS_FAILURE, payload: error.message });
                 dispatch({ type: constants.LOAD_USERS_END });
             });

@@ -1,28 +1,38 @@
 import React from 'react';
-import BlogService from '../services/BlogService.js';
-import {browserHistory} from 'react-router';
-import UserLink from '../components/UserLink.jsx';
+import {browserHistory, Link} from 'react-router';
+
+import { loadBlogs } from '../actions/blogsActions';
+import { loadUsers } from '../actions/usersActions';
+import { connect } from 'react-redux';
 
 import '../../style/components/BlogPost';
 
+@connect(store => {
+    return {
+        blogs: store.blogs.blogs,
+        isLoaded: store.blogs.isLoaded,
+        users: store.users.users,
+        isLoadedUsers: store.users.isLoaded
+    };
+})
 export default class BlogPost extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            loaded: false,
-            mounted: false,
-            blogData: null
-        };
-
         // { "userId": 1, "id": 1, "title": "sunt ...", "body": "quia ..." }
-        BlogService.getBlogById(this.props.blogId).then(data => this.setState({blogData: data,loaded: true }));
-
+        
         this.handleBack = this.handleBack.bind(this);
-    }
 
-    componentWillMount() {
-        this.setState({mounted: true});
+        // если блоги еще не были загружены
+        if(! this.props.isLoaded)
+            this.props.dispatch(loadBlogs());
+        // загружаем юзеров
+        if(! this.props.isLoadedUsers) {
+            this.props.dispatch(loadUsers());
+            this.user = 'loading user';
+        }
+
+        this.blogData = this.props.blogs.filter(blogIn => blogIn == this.props.blogId)[0] || {};
     }
 
     handleBack() {
@@ -31,30 +41,32 @@ export default class BlogPost extends React.Component {
 
     render() {
   
-        if (!(this.state.loaded && this.state.mounted)) 
+        if (! this.props.isLoaded) 
             return <span>Loading data...</span>;
-        
-        const blogData = Object.assign({
-            date: new Date(new Date().getTime() * Math.random()).toString()
-        }, this.state.blogData);
 
+        this.blogData = this.props.blogs.filter(blogIn => blogIn.id == this.props.blogId)[0];
+
+        if(! this.props.isLoadedUsers)
+            this.user = {};
+        else
+            this.user = this.props.users.filter(userIn => userIn.id == this.blogData.userId)[0];
         
         return (
             <div>
                 <button onClick={this.handleBack} type="button" className="btn btn-primary">Вернуться назад</button>
 
-                <h1>{blogData.title}
-                    <small>(id: {blogData.id})</small></h1>
+                <h1>{this.blogData.title}
+                    <small>(id: {this.blogData.id})</small></h1>
 
                 <p className="lead">
-                    by <UserLink userId = {blogData.userId} />
+                    by <Link to={`/users/${this.user.id}`}>{this.user.name}</Link>
                 </p>
 
                 <hr/>
 
                 <p>
                     <span className="glyphicon glyphicon-time"></span>
-                    Posted on {blogData.date}</p>
+                    Posted on {new Date(new Date().getTime() * Math.random()).toString()}</p>
 
                 <hr/>
 
@@ -62,7 +74,7 @@ export default class BlogPost extends React.Component {
 
                 <hr/>
 
-                <p>{blogData.body}</p>
+                <p>{this.blogData.body}</p>
 
                 <hr/>
 

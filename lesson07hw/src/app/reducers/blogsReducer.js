@@ -5,7 +5,7 @@ export default function blogsReducer(state = { blogs: [], isLoading: false, isLo
         case constants.ADD_BLOG: {
             let blogs = state.blogs.slice(0);
             // создаем рандомный айди
-            action.payload.id = parseInt(Math.random() * 100);
+            action.payload.id = parseInt(Math.random() * 1000 + 100);
             blogs.push(action.payload);
 
             state = {...state, blogs };

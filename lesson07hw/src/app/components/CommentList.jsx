@@ -1,17 +1,19 @@
 import React from 'react';
 import Comment from './Comment';
 import "../../style/components/CommentList";
-import CommentService from '../services/CommentService.js';
+import { connect } from 'react-redux';
 
+import { loadCommentsForPost, loadAllComments } from '../actions/commentsActions';
+
+@connect(store => {
+    return {
+        comments: store.comments.comments,
+        isAllLoaded: store.comments.isAllLoaded   
+    };
+})
 export default class CommentList extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            loaded: false,
-            mounted: false,
-            commentData: null
-        };
 
         // {
         //     "postId": 1,
@@ -21,35 +23,43 @@ export default class CommentList extends React.Component {
         //     "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
         // }
 
+        this.comments = [];
         if(this.props.blogId) { // если задан номер блога
-            CommentService.getCommentsByBlogId(this.props.blogId).then((data) => {            
-                this.setState({loaded: true, commentData: data});            
-            });
+            this.props.dispatch(loadCommentsForPost(this.props.blogId));
         }
         else if(this.props.userId) { // если задан пользователь
-            CommentService.getCommentsByUserId(this.props.userId).then((data) => {            
-                this.setState({loaded: true, commentData: data});            
-            });
+            if(! this.props.isAllLoaded)
+                this.props.dispatch(loadAllComments());
+            // this.comments = this.props.comments.filter(commentIn => parseInt(Math.random()*20) == 5);
         }
         else { // если ничего не задано то выводим последние 50 комментов
-            CommentService.getAllComments().then((data) => {            
-                this.setState({loaded: true, commentData: data.reverse().slice(1,50)});            
-            });
+            if(! this.props.isAllLoaded)
+                this.props.dispatch(loadAllComments());
+            // this.comments = this.props.comments.reverse().slice(0,49);
         }
         
     }
 
-    componentWillMount() {
-        this.setState({mounted: true});
-    }
-
     render() { 
-        if(!(this.state.loaded && this.state.mounted))
+        if(this.props.blogId) { // если задан номер блога
+                this.comments = this.props.comments.filter(commentIn => commentIn.postId == this.props.blogId);
+        }
+        else if(this.props.userId) { // если задан пользователь
+            this.comments = this.props.comments.filter(commentIn => { 
+                return parseInt(Math.random()*20) == 5;});
+        }
+        else { // если ничего не задано то выводим последние 50 комментов
+            this.comments = this.props.comments.reverse().slice(0,49);
+        }
+
+
+        
+        if(! this.comments.length)
             return <span>Loading comments...</span>;
 
-        let comments = this.state.commentData.map((item) => {
-                                    return <Comment {...item} date={new Date(new Date().getTime() * Math.random()).toISOString()} key={'commentId' + item.id} />                                    
-                                });                      
+        const comments = this.comments.map((item) => {
+            return <Comment {...item} date={new Date(new Date().getTime() * Math.random()).toISOString()} key={'commentId' + item.id} />                                    
+        });                      
         
         return(
             <div className="comment-list">

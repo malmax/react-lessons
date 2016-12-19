@@ -28,7 +28,8 @@ export default class UserPage extends React.Component {
         // "catchPhrase": "Multi-layered client-server neural-net",       "bs": "harness
         // real-time e-markets"     }   },
 
-        this.props.dispatch(loadUsers());
+        if(! this.props.isLoaded)
+            this.props.dispatch(loadUsers());
         this.handleBack = this.handleBack.bind(this);
     }
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import BlogInList from "../components/BlogInList.jsx";
-import BlogService from '../services/BlogService.js';
 import Modal from '../components/Modal.jsx';
 
 import { addBlog, loadBlogs } from '../actions/blogsActions';
-// import blogStore from '../stores/BlogStore.js';
 
 import { connect } from 'react-redux';
 
@@ -18,17 +16,18 @@ import { connect } from 'react-redux';
 @connect((store) => {
     return {
         blogs: store.blogs.blogs,
-        isLoading: store.blogs.isLoading,
         isLoaded: store.blogs.isLoaded,
-        error: store.blogs.error
     };
 })
 export default class BlogListPage extends React.Component {
     constructor(props) {
         super(props);
        
-        let toDispatch = loadBlogs();
-        this.props.dispatch(toDispatch);
+        // если блоги еще не были загружены
+        if(! this.props.isLoaded) {
+            let toDispatch = loadBlogs();
+            this.props.dispatch(toDispatch);
+        }
         
         this.blogs = [];
         // Здесь будут хранитсья ссылки на инпуты формы
@@ -47,13 +46,17 @@ export default class BlogListPage extends React.Component {
         this.props.dispatch(toDispatch);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.blogs = nextProps.blogs;
-        if(this.props.userId)
-            this.blogs = nextProps.blogs.filter(blog1 => blog1.userId == this.props.userId );
-    }
+    // componentWillUpdate() {
+    //     this.blogs = this.props.blogs;
+    //     if(this.props.userId)
+    //         this.blogs = this.props.blogs.filter(blog1 => blog1.userId == this.props.userId );
+    // }
 
     render() {
+
+        this.blogs = this.props.blogs;
+        if(this.props.userId)
+            this.blogs = this.props.blogs.filter(blog1 => blog1.userId == this.props.userId );
 
         return (
             <div>

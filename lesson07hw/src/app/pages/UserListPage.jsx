@@ -1,5 +1,4 @@
 import React from 'react';
-import UserService from '../services/UserService.js';
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import { loadUsers } from '../actions/usersActions';
@@ -23,7 +22,8 @@ export default class UserListPage extends React.Component {
         // "catchPhrase": "Multi-layered client-server neural-net",       "bs": "harness
         // real-time e-markets"     }   },
 
-        this.props.dispatch(loadUsers());
+        if(! this.props.isLoaded)
+            this.props.dispatch(loadUsers());
 
     }
 
